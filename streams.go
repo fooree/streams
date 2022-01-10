@@ -23,3 +23,7 @@ type Filter interface {
 type Map interface {
 	Map(func(interface{}) interface{}) Channel
 }
+
+type ForEach interface {
+	ForEach(func(interface{}))
+}

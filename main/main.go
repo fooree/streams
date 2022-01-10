@@ -20,7 +20,7 @@ func main() {
 		Map(func(t interface{}) interface{} {
 			return fmt.Sprintf("s-%d", t)
 		}).
-		To(channel.NewChanSink).(*channel.ChanSink).Out
+		To(channel.NewSink).(*channel.ChanSink).Out
 
 	for v := range ch {
 		fmt.Println(v)
@@ -36,7 +36,7 @@ func main() {
 		close(src)
 	}()
 
-	ch = channel.NewChanSource(src).
+	channel.NewSource(src).
 		Map(func(i interface{}) interface{} {
 			return i.(int) + 1 + 2
 		}).
@@ -49,10 +49,10 @@ func main() {
 		Map(func(t interface{}) interface{} {
 			return fmt.Sprintf("s-%d", t)
 		}).
-		To(channel.NewChanSink).(*channel.ChanSink).Out
+		To(channel.NewSink).(*channel.ChanSink).
+		ForEach(func(i interface{}) {
+			fmt.Println(i)
+		})
 
-	for v := range ch {
-		fmt.Println(v)
-	}
 	fmt.Println("finished1")
 }

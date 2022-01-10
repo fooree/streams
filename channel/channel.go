@@ -20,13 +20,19 @@ func (c *ChanSource) Out() <-chan interface{} {
 	return c.out
 }
 
-func NewChanSource(ch chan interface{}) *ChanSource {
+func NewSource(ch chan interface{}) *ChanSource {
 	return &ChanSource{out: ch}
 }
 
 type ChanSink struct {
 	source streams.Source
 	Out    chan interface{}
+}
+
+func (c *ChanSink) ForEach(fn func(interface{})) {
+	for v := range c.Out {
+		fn(v)
+	}
 }
 
 func (c *ChanSink) In() chan<- interface{} {
@@ -40,7 +46,7 @@ func (c *ChanSink) do() {
 	close(c.Out)
 }
 
-func NewChanSink(source streams.Source) streams.Sink {
+func NewSink(source streams.Source) streams.Sink {
 	s := &ChanSink{
 		source: source,
 		Out:    make(chan interface{}),
