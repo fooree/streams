@@ -1,5 +1,7 @@
 package channel
 
+var _ = Any
+
 func Int(slice ...int) *ChanSource {
 	ch := make(chan interface{})
 	go func() {
