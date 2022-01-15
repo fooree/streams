@@ -25,3 +25,13 @@ func Any(slice ...interface{}) *ChanSource {
 	c := &ChanSource{ch}
 	return c
 }
+
+func New(f func(i chan interface{})) *ChanSource {
+	ch := make(chan interface{})
+	go func() {
+		f(ch)
+		close(ch)
+	}()
+	c := &ChanSource{ch}
+	return c
+}

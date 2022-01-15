@@ -20,6 +20,16 @@ func (c *ChanSource) Out() <-chan interface{} {
 	return c.out
 }
 
+func (c *ChanSource) ForEach(f func(i interface{})) {
+	for v := range c.Out() {
+		f(v)
+	}
+}
+
+func (c *ChanSource) ToSink() *ChanSink {
+	return NewSink(c).(*ChanSink)
+}
+
 func NewSource(ch chan interface{}) *ChanSource {
 	return &ChanSource{out: ch}
 }

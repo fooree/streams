@@ -55,4 +55,15 @@ func main() {
 		})
 
 	fmt.Println("finished1")
+
+	slice := []int{1, 2, 3, 4, 5}
+	channel.New(func(ch chan interface{}) {
+		for _, v := range slice {
+			ch <- v * 4
+		}
+	}).ForEach(func(v interface{}) {
+		fmt.Println(v)
+	})
+	fmt.Println("finished2")
+
 }
