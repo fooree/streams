@@ -27,3 +27,11 @@ type Map interface {
 type ForEach interface {
 	ForEach(func(interface{}))
 }
+
+type ForSelect interface {
+	forSelect(func(interface{}) bool, func(interface{}))
+}
+
+type ToSlice interface {
+	ToSlice() []interface{}
+}
