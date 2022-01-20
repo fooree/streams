@@ -31,6 +31,12 @@ func (s Slice) forSelect(test func(interface{}) bool, each func(interface{})) {
 	}
 }
 
-func (s Slice) ToSlice() []interface{} {
+func (s Slice) ToSlice() (res []interface{}) {
 	return s
+}
+
+func (s Slice) forMap(doMap func(interface{}) interface{}, each func(interface{})) {
+	for i := 0; i < len(s); i++ {
+		each(doMap(s[i]))
+	}
 }

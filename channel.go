@@ -21,3 +21,17 @@ func (c Channel0) ForEach(f func(interface{})) {
 		f(v)
 	}
 }
+
+func (c Channel0) forSelect(test func(interface{}) bool, each func(interface{})) {
+	for v := range c {
+		if test(v) {
+			each(v)
+		}
+	}
+}
+
+func (c Channel0) forMap(mapFunc func(interface{}) interface{}, each func(interface{})) {
+	for v := range c {
+		each(mapFunc(v))
+	}
+}

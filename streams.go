@@ -29,7 +29,11 @@ type ForEach interface {
 }
 
 type ForSelect interface {
-	forSelect(func(interface{}) bool, func(interface{}))
+	forSelect(test func(interface{}) bool, each func(interface{}))
+}
+
+type ForMap interface {
+	forMap(mapFunc func(interface{}) interface{}, each func(interface{}))
 }
 
 type ToSlice interface {

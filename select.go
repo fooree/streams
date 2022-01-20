@@ -12,11 +12,11 @@ func (s *Selector) Map(f func(interface{}) interface{}) *Mapper {
 		source: make(Channel0),
 		apply:  f,
 	}
-	go s.convert(m)
+	go s.flow(m)
 	return m
 }
 
-func (s *Selector) convert(m *Mapper) {
+func (s *Selector) flow(m *Mapper) {
 	ch := m.source.(Channel0)
 	defer close(ch)
 	switch x := s.source.(type) {
@@ -46,5 +46,5 @@ func (s *Selector) Select(f func(interface{}) bool) *Selector {
 }
 
 func (s *Selector) ForEach(f func(interface{})) {
-	foreach(s.source, s.test, f)
+	selectEach(s.source, s.test, f)
 }
